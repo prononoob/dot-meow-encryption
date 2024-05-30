@@ -4,7 +4,7 @@ from os import listdir
 
 class EncryptionTools:
     def loadKey(fileName: str) -> bytes:
-        pass
+        return open(fileName, 'rb').read()
 
     def generateKey(fileName: str = 'secret') -> None:
         dirContent = listdir()
