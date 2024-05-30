@@ -1,0 +1,15 @@
+# A simple file encryptor
+
+-----
+
+This program allows you to generate a key, encrypt files anh decrypt them  
+
+- Encrypted files have a '.meow' extension (hence the name)
+- Key has a '.catsound' extension  
+
+-----
+
+# TODO:
+- [ ] add multiple file encryption and decryption
+- [ ] improve exception handling
+- [ ] add a GUI
