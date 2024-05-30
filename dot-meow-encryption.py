@@ -1,5 +1,5 @@
 from cryptography.fernet import Fernet
-from os import listdir
+from os import listdir, remove
 
 
 class EncryptionTools:
@@ -15,12 +15,54 @@ class EncryptionTools:
         with open(filePath, 'wb') as keyFile:
             keyFile.write(key)
     
-    def encrypt(fileName: str) -> None:
+    def encryptFile(fileName: str, f: Fernet, destructive: bool = True) -> None:
+        with open(fileName, 'rb') as file:
+            originalFile = file.read()
+        
+        encryptedFileContents = f.encrypt(originalFile)
+        encryptedPath = fileName + '.meow'
+
+        with open(encryptedPath, 'wb') as encryptedFile:
+            encryptedFile.write(encryptedFileContents)
+        
+        print(f'{fileName} was succesfully encrypted', end='')
+
+        if destructive:
+            remove(fileName)
+            print(' and the original file was deleted')
+        else:
+            print()
+
+    
+    def encryptFiles(key: bytes):
         pass
+
+    def decryptFile(fileName:str, f: Fernet, destructive: bool = True) -> None:
+        with open(fileName, 'rb') as encryptedFile:
+            encryptedFileContents = encryptedFile.read()
+        
+        decryptedFileContents = f.decrypt(encryptedFileContents)
+        fileName = fileName.rsplit('.', 1)[0]
+
+        with open(fileName, 'wb') as decryptedFile:
+            decryptedFile.write(decryptedFileContents)
+        
+        print(f'{fileName} was succesfully decrypted', end='')
+
+        if destructive:
+            remove(fileName + '.meow')
+            print(' and the original file was deleted')
+        else:
+            print()
         
 
 def main():
     EncryptionTools.generateKey()
+    key = EncryptionTools.loadKey('secret.catsound')
+    f = Fernet(key)
+    EncryptionTools.encryptFile('testFile.txt', f)
+    input()
+    EncryptionTools.decryptFile('testFile.txt.meow', f)
 
 if __name__ == '__main__':
     main()
