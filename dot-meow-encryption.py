@@ -34,8 +34,9 @@ class EncryptionTools:
             print()
 
     
-    def encryptFiles(key: bytes):
-        pass
+    def encryptFiles(f: Fernet, files: list[str], destructive: bool = True) -> None:
+        for i in files:
+            EncryptionTools.encryptFile(i, f, destructive)
 
     def decryptFile(fileName:str, f: Fernet, destructive: bool = True) -> None:
         with open(fileName, 'rb') as encryptedFile:
@@ -60,9 +61,14 @@ def main():
     EncryptionTools.generateKey()
     key = EncryptionTools.loadKey('secret.catsound')
     f = Fernet(key)
-    EncryptionTools.encryptFile('testFile.txt', f)
+    # EncryptionTools.encryptFile('testFile.txt', f)
+    # input()
+    # EncryptionTools.decryptFile('testFile.txt.meow', f)
+    EncryptionTools.encryptFiles(f, ['testFile.txt', 'testFile2.txt', 'testFile3.txt'])
     input()
     EncryptionTools.decryptFile('testFile.txt.meow', f)
+    EncryptionTools.decryptFile('testFile2.txt.meow', f)
+    EncryptionTools.decryptFile('testFile3.txt.meow', f)
 
 if __name__ == '__main__':
     main()
