@@ -55,20 +55,20 @@ class EncryptionTools:
             print(' and the original file was deleted')
         else:
             print()
+
+    def decryptFiles(f: Fernet, files: list[str], destructive: bool = True) -> None:
+        for i in files:
+            EncryptionTools.decryptFile(i, f, destructive)
         
 
 def main():
     EncryptionTools.generateKey()
     key = EncryptionTools.loadKey('secret.catsound')
     f = Fernet(key)
-    # EncryptionTools.encryptFile('testFile.txt', f)
-    # input()
-    # EncryptionTools.decryptFile('testFile.txt.meow', f)
     EncryptionTools.encryptFiles(f, ['testFile.txt', 'testFile2.txt', 'testFile3.txt'])
     input()
-    EncryptionTools.decryptFile('testFile.txt.meow', f)
-    EncryptionTools.decryptFile('testFile2.txt.meow', f)
-    EncryptionTools.decryptFile('testFile3.txt.meow', f)
+    EncryptionTools.decryptFiles(f, ['testFile.txt.meow', 'testFile2.txt.meow', 'testFile3.txt.meow'])
+    
 
 if __name__ == '__main__':
     main()
