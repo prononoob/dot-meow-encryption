@@ -10,6 +10,6 @@ This program allows you to generate a key, encrypt files anh decrypt them
 -----
 
 # TODO:
-- [ ] add multiple file encryption and decryption
+- [x] add multiple file encryption and decryption
 - [ ] improve exception handling
 - [ ] add a GUI
