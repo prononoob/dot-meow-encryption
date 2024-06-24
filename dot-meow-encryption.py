@@ -3,9 +3,11 @@ from os import listdir, remove
 
 
 class EncryptionTools:
+    @staticmethod
     def loadKey(fileName: str) -> bytes:
         return open(fileName, 'rb').read()
 
+    @staticmethod
     def generateKey(fileName: str = 'secret') -> None:
         dirContent = listdir()
         filePath = fileName + '.catsound'
@@ -15,6 +17,7 @@ class EncryptionTools:
         with open(filePath, 'wb') as keyFile:
             keyFile.write(key)
     
+    @staticmethod
     def encryptFile(fileName: str, f: Fernet, destructive: bool = True) -> None:
         with open(fileName, 'rb') as file:
             originalFile = file.read()
@@ -34,10 +37,12 @@ class EncryptionTools:
             print()
 
     
+    @staticmethod
     def encryptFiles(f: Fernet, files: list[str], destructive: bool = True) -> None:
         for i in files:
             EncryptionTools.encryptFile(i, f, destructive)
 
+    @staticmethod
     def decryptFile(fileName:str, f: Fernet, destructive: bool = True) -> None:
         with open(fileName, 'rb') as encryptedFile:
             encryptedFileContents = encryptedFile.read()
@@ -56,6 +61,7 @@ class EncryptionTools:
         else:
             print()
 
+    @staticmethod
     def decryptFiles(f: Fernet, files: list[str], destructive: bool = True) -> None:
         for i in files:
             EncryptionTools.decryptFile(i, f, destructive)
