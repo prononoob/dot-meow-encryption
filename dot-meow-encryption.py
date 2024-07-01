@@ -1,5 +1,6 @@
 from cryptography.fernet import Fernet
 from os import listdir, remove
+from os.path import isdir
 
 
 class EncryptionTools:
@@ -28,7 +29,7 @@ class EncryptionTools:
         with open(encryptedPath, 'wb') as encryptedFile:
             encryptedFile.write(encryptedFileContents)
         
-        print(f'{fileName} was succesfully encrypted', end='')
+        print(f'{fileName} was successfully encrypted', end='')
 
         if destructive:
             remove(fileName)
@@ -40,10 +41,14 @@ class EncryptionTools:
     @staticmethod
     def encryptFiles(f: Fernet, files: list[str], destructive: bool = True) -> None:
         for i in files:
-            EncryptionTools.encryptFile(i, f, destructive)
+            if isdir(i):
+                dirContents = [i + '\\' + file for file in listdir(i)]
+                EncryptionTools.encryptFiles(f, dirContents, destructive)
+            else:
+                EncryptionTools.encryptFile(i, f, destructive)
 
     @staticmethod
-    def decryptFile(fileName:str, f: Fernet, destructive: bool = True) -> None:
+    def decryptFile(fileName: str, f: Fernet, destructive: bool = True) -> None:
         with open(fileName, 'rb') as encryptedFile:
             encryptedFileContents = encryptedFile.read()
         
@@ -53,7 +58,7 @@ class EncryptionTools:
         with open(fileName, 'wb') as decryptedFile:
             decryptedFile.write(decryptedFileContents)
         
-        print(f'{fileName} was succesfully decrypted', end='')
+        print(f'{fileName} was successfully decrypted', end='')
 
         if destructive:
             remove(fileName + '.meow')
@@ -64,16 +69,20 @@ class EncryptionTools:
     @staticmethod
     def decryptFiles(f: Fernet, files: list[str], destructive: bool = True) -> None:
         for i in files:
-            EncryptionTools.decryptFile(i, f, destructive)
+            if isdir(i):
+                dirContents = [i + '\\' + file for file in listdir(i)]
+                EncryptionTools.decryptFiles(f, dirContents, destructive)
+            else:
+                EncryptionTools.decryptFile(i, f, destructive)
         
 
 def main():
     EncryptionTools.generateKey()
     key = EncryptionTools.loadKey('secret.catsound')
     f = Fernet(key)
-    EncryptionTools.encryptFiles(f, ['testFile.txt', 'testFile2.txt', 'testFile3.txt'])
+    EncryptionTools.encryptFiles(f, ['dot-test'])
     input()
-    EncryptionTools.decryptFiles(f, ['testFile.txt.meow', 'testFile2.txt.meow', 'testFile3.txt.meow'])
+    EncryptionTools.decryptFiles(f, ['dot-test'])
     
 
 if __name__ == '__main__':
