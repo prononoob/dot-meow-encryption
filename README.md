@@ -11,5 +11,5 @@ This program allows you to generate a key, encrypt files anh decrypt them
 
 # TODO:
 - [x] add multiple file encryption and decryption
-- [ ] improve exception handling
-- [ ] add a GUI
+- [x] improve exception handling
+- [x] add a GUI
