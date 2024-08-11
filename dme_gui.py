@@ -1,11 +1,13 @@
 import tkinter as tk
 from dme_tools import *
-from os import listdir
+from os import listdir, chdir
+from os.path import dirname, abspath
 import re
 
 
 class ToolsWindow:
     def __init__(self) -> None:
+        chdir(dirname(abspath(argv[0])))
         fontDef = ('Arial', 15)
         root = tk.Tk()
         root.title('dot-meow-encryptor')
