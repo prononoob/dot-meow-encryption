@@ -14,7 +14,7 @@ This program allows you to generate a key, encrypt files anh decrypt them
 - Make sure to install Tkinter
 - Run 'pip install -r requirements.txt'
 - For Graphical Interface
-  - Run 'python dme_gui.py'
+  - Click on dme_gui.py or run 'python dme_gui.py'
   - Generate Key button creates a file secret.catsound that contains an encryption key, the key has to be inside the same directory that the .py file are for the encryption to work
   - Encrypt/Decrypt buttons do what they say using the beformentioned key
   - After encrypting/decrypting move the generated key somewhere safe
